@@ -1,12 +1,12 @@
 import Foundation
 import Dependencies
 
-public struct LogManagerClient {
-    public var addLogClient: (_ client: LoggingClient) -> Void
+public struct LoggerClient {
+    public var addLogClient: (_ client: LoggingServiceClient) -> Void
     
     var _log: (LogLevel, String, CustomStringConvertible?) -> Void
 }
-extension LogManagerClient {
+extension LoggerClient {
     public func log(
         _ level: LogLevel,
         _ log: String,
@@ -19,30 +19,30 @@ extension LogManagerClient {
         _log(.default, log, context)
     }
 }
-extension LogManagerClient: DependencyKey {
-    public static let liveValue = LogManagerClient { client in
+extension LoggerClient: DependencyKey {
+    public static let liveValue = LoggerClient { client in
         LogManager.addLogClient(client)
     } _log: { level, log, context in
         LogManager.log(level, log: log, context: context)
     }
 
 }
-extension LogManagerClient: TestDependencyKey {
-    public static let testValue = LogManagerClient(addLogClient: { _ in },
+extension LoggerClient: TestDependencyKey {
+    public static let testValue = LoggerClient(addLogClient: { _ in },
                                                    _log: { _, _, _ in })
 }
 
 public extension DependencyValues {
-    var logManagerClient: LogManagerClient {
-        get { self[LogManagerClient.self] }
-        set { self[LogManagerClient.self] = newValue }
+    var loggerClient: LoggerClient {
+        get { self[LoggerClient.self] }
+        set { self[LoggerClient.self] = newValue }
     }
 }
 
 final class LogManager {
-    private static var logClients: [LoggingClient] = []
+    private static var logClients: [LoggingServiceClient] = []
     
-    static func addLogClient(_ client: LoggingClient) {
+    static func addLogClient(_ client: LoggingServiceClient) {
         logClients.append(client)
     }
     
