@@ -8,7 +8,7 @@ public struct LoggingServiceClient {
         self.log = log
     }
 }
-extension LoggingServiceClient {
+public extension LoggingServiceClient {
     static func console(useNSLog: Bool = false, minLevel: LogLevel = .info) -> LoggingServiceClient {
         let consoleLog = ConsoleLogService(useNSLog: useNSLog, minLevel: minLevel)
         return LoggingServiceClient(log: consoleLog.log(level:log:context:))
