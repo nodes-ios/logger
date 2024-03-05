@@ -4,7 +4,7 @@ A Swift logging package for use with the pointfree swift-dependencies library. F
 
 This library simplifies logging to multiple logging service clients making debugging and catching bugs easier than ever before. It comes packaged with implementations for console, OSLog and File logging. 
 
-### Please note!
+### ❗️Please note
 We have an extension of the package that includes the option to log to **Firebase Crashlytics** available [here](https://github.com/nodes-ios/logger-with-firebase-crashlytics). If you would like to use Firebase Crashlytics logging, please use that repository instead of this one. 
 
 
@@ -56,6 +56,7 @@ logger.addLogClient(.file())
 Each of these service clients can be initalised with default values set withing the SDK or customised to your needs like so.
 
 **Console**
+
 The `console` client can be configured with a minimum logging level to determine which logs should be captured and whether to use NSLog or simply print to the terminal. It defaults to not use NSLog and to a minimum log level of `debug`.
 eg.
 ```
@@ -63,6 +64,7 @@ logger.addLogClient(.console(useNSLog: false, minLevel: .debug))
 ```
 
 **OSLog**
+
 The `osLog` client can be configured with a subsystem, category and minLevel. The subsystem will default to the app bundle id and min level will default to debug. Category is a manadatory parameter when initalizing the osLog client.
 eg.
 ```
@@ -70,6 +72,7 @@ logger.addLogClient(.osLog(subsystem: "subsystem", category: "category", minLeve
 ```
 
 **File**
+
 The `file` client can be configured with a log file URL and minLevel. If not set, the SDK will write to a default file location set within the SDK.
 eg.
 ```
@@ -77,6 +80,7 @@ logger.addLogClient(.osLog(subsystem: "subsystem", category: "category", minLeve
 ```
 
 **Custom**
+
 In the case you need to add additional logging service clients, you can easily do so like below. A logging service client needs to provide a log function handler that will be called whenever a log is sent. The function will pass three paramters. The log level, the log and optional context to provide additional data.
 ```
 logger.addLogClient(.init(log: { level, log, context in
